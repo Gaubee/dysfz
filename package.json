@@ -1,7 +1,7 @@
 {
   "name": "dysfz",
   "version": "1.0.0",
-  "description": "电影首发站点cli",
+  "description": "电影首发站点web",
   "main": "bin/index.js",
   "bin": {
     "dysfz": "index.js"
@@ -14,21 +14,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chiwent/dysfz.git"
+    "url": "git+https://github.com/Gaubee/dysfz.git"
   },
   "keywords": [
     "电影首发站",
     "cli"
   ],
-  "author": "chiwent",
+  "author": "Gaubee",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chiwent/dysfz/issues"
+    "url": "https://github.com/Gaubee/dysfz/issues"
   },
-  "homepage": "https://github.com/chiwent/dysfz#readme",
+  "homepage": "https://github.com/Gaubee/dysfz#readme",
   "dependencies": {
     "chalk": "^2.4.1",
     "cheerio": "^1.0.0-rc.2",
+    "koa": "^2.5.3",
     "meow": "^5.0.0",
     "readline": "^1.3.0",
     "request": "^2.88.0"
