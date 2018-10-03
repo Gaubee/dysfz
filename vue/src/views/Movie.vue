@@ -15,27 +15,7 @@
         <div class="md-helper-text">搜索的资源来自第三方，耐心等待搜索结果</div>
       </div>
       <div class="search-result-list" v-if="show_search_result">
-        <md-card class="search-result-item" v-for="item in search_list" :key="item.id">
-          
-          <md-card-header>
-            <span class="md-title">{{item.title}}</span>
-          </md-card-header>
-          <md-card-media-actions>
-            <md-card-media>
-              <img src="https://i0.hippopx.com/photos/320/918/427/sky-clouds-sunlight-dark-thumb.jpg" alt="Cover">
-            </md-card-media>
-
-            <md-card-actions>
-              
-              <md-button class="md-icon-button">
-                <md-icon>star</md-icon>
-              </md-button>
-              <div class="vote">3.3</div>
-            </md-card-actions>
-          </md-card-media-actions>
-
-        </md-card>
-        
+        <movie-item class="search-result-item" v-for="item in search_list" :key="item.id" :movie="item"></movie-item>
       </div>
     </div>
   </div>
@@ -71,27 +51,6 @@
   .search-result-list {
     .search-result-item {
       margin-bottom: 1.6rem;
-      .media-img {
-        max-width: 100%;
-        max-height: 100%;
-        position: absolute;
-        top: 50%;
-        left: 0;
-        z-index: 2;
-      }
-      .media-img-blur-bg {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        z-index: 1;
-        filter: blur(0.5rem);
-        top: 50%;
-        left: 0;
-        opacity: 0.8;
-      }
-      .vote{
-        text-align: center;
-      }
     }
   }
 }
@@ -99,32 +58,55 @@
 
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
+import MovieItem from "../components/MovieItem.vue";
+import { MovieSearcher, MovieListItemData } from "../service/MovieSearcher";
 
 @Component({
-  components: {}
+  components: { MovieItem }
 })
 export default class Movie extends Vue {
   search_text = "";
   searching = false;
   searched = "";
   search_list = [] as any[];
+  movieSearcherProvider = MovieSearcher.instance;
+  created() {
+    window["zz"] = this;
+    this.fetchSearchResult();
+  }
   get show_search_result() {
     return this.search_list.length > 0;
   }
-  async doSearch() {
+
+  doSearch() {
     const search_text = this.search_text.trim();
     if (!search_text) {
+      return;
+    }
+    this.$router.push({
+      name: "searchmovie",
+      query: {
+        q: search_text
+      }
+    });
+  }
+  @Watch("$route.query.q")
+  async fetchSearchResult(query_text = this.$route.query.q) {
+    if (!query_text) {
+      return;
+    }
+    console.log("search:", query_text);
+    this.search_text = query_text.trim();
+    if (!this.search_text) {
       return;
     }
     try {
       this.searching = true;
       await new Promise(cb => setTimeout(cb, 100 + 300 * Math.random()));
-      this.search_list = [
-        { id: "qaq", title: "QAQ" },
-        { id: "xxas", title: "XXAS" },
-        { id: "vdaopoasda", title: "VDAOPOASDA" }
-      ];
+      this.search_list = await this.movieSearcherProvider.search(
+        this.search_text
+      );
     } catch (err) {
     } finally {
       this.searching = false;
