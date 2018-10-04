@@ -1,0 +1,49 @@
+{
+  "name": "gmovie",
+  "version": "1.0.0",
+  "description": "电影首发站点web",
+  "main": "bin/index.js",
+  "bin": {
+    "gmovie": "index.js"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "dev": "tsc -w",
+    "test": "node dist/test/test.js",
+    "test-brk": "node --inspect-brk dist/test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gaubee/gmovie.git"
+  },
+  "keywords": [
+    "电影首发站",
+    "cli",
+    "movie"
+  ],
+  "author": "Gaubee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Gaubee/gmovie/issues"
+  },
+  "homepage": "https://github.com/Gaubee/gmovie#readme",
+  "dependencies": {
+    "@types/got": "^8.3.4",
+    "caw": "^2.0.1",
+    "chalk": "^2.4.1",
+    "cheerio": "^1.0.0-rc.2",
+    "got": "^9.2.2",
+    "koa": "^2.5.3",
+    "meow": "^5.0.0",
+    "node-fetch": "^2.2.0",
+    "readline": "^1.3.0",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.9",
+    "@types/node-fetch": "^2.1.2",
+    "deep-equal": "^1.0.1"
+  }
+}
